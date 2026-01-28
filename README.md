@@ -22,7 +22,7 @@ Data Organization:
 Create a directory named all_datasets in the root folder.
 
 Place all downloaded datasets files directly into this directory.
-
+```text
 Directory Structure:
 PULSE/
 ├── ...
@@ -36,7 +36,7 @@ PULSE/
 │   └── ...
 ├── run.py
 └── README.md
-
+```
 ### 3. Training Example
 You can easily reproduce the results from the paper by running the provided script commands. For instance, to reproduce the results for the ETTh1 dataset, execute the following command:
 
