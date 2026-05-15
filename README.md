@@ -65,9 +65,9 @@ These results suggest that a phase-aware inductive bias can be more important th
   <img src="assets/table1_main_results.png" width="98%">
 </p>
 
-<p align="center">
+<!-- <p align="center">
   <b>Table 1.</b> Main forecasting performance across 12 real-world datasets.
-</p>
+</p> -->
 
 ---
 
@@ -88,17 +88,17 @@ iTransformer
   <img src="assets/table2_plug_and_play.png" width="98%">
 </p>
 
-<p align="center">
+<!-- <p align="center">
   <b>Table 2.</b> Plug-and-play forecasting performance with different backbones.
-</p>
+</p> -->
 
 <p align="center">
   <img src="assets/fig4_plug_and_play_efficiency.png" width="78%">
 </p>
 
-<p align="center">
+<!-- <p align="center">
   <b>Figure 4.</b> Plug-and-play efficiency on the Solar dataset.
-</p>
+</p> -->
 
 ---
 
@@ -116,9 +116,9 @@ The ablation results show that:
   <img src="assets/table3_ablation.png" width="98%">
 </p>
 
-<p align="center">
+<!-- <p align="center">
   <b>Table 3.</b> Ablation studies of the proposed PULSE framework.
-</p>
+</p> -->
 
 ---
 
@@ -148,9 +148,9 @@ The results show that PULSE improves forecasting accuracy with modest runtime an
   <img src="assets/table4_efficiency_tradeoff.png" width="98%">
 </p>
 
-<p align="center">
+<!-- <p align="center">
   <b>Table 4.</b> Plug-and-play accuracy--efficiency trade-off.
-</p>
+</p> -->
 
 ---
 
