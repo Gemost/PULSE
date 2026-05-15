@@ -1,16 +1,20 @@
 # PULSE: Generative Phase Evolution for Non-Stationary Time Series Forecasting
 
-<p align="center">
-  <img src="assets/fig1_motivation_efficiency.png" width="95%">
-</p>
+Welcome to the official repository of the PULSE paper: **"Generative Phase Evolution for Non-Stationary Time Series Forecasting"**.
 
-This is the official implementation of **PULSE: Generative Phase Evolution for Non-Stationary Time Series Forecasting**.
+## Updates
 
-PULSE is a physics-informed framework for non-stationary time series forecasting. It shifts forecasting from **passive historical fitting** to **generative phase evolution**, enabling a lightweight backbone to model evolving temporal structures under distribution shifts.
+🚩 **News (2026.05):** PULSE has been accepted to ICML 2026, and the paper and code are currently available.
 
 ---
 
 ## Overview
+
+PULSE is a physics-informed framework for non-stationary time series forecasting. It shifts forecasting from **passive historical fitting** to **generative phase evolution**, enabling a lightweight backbone to model evolving temporal structures under distribution shifts.
+
+<p align="center">
+  <img src="assets/fig1_motivation_efficiency.png" width="95%">
+</p>
 
 Time series forecasting under non-stationarity requires models to capture stable temporal structures while adapting to future distribution shifts. Existing methods often rely on static assumptions, such as restoring future statistics from historical windows or directly copying historical periodic patterns. These assumptions may cause **Phase Amnesia**, where models lose awareness of the evolving global temporal context.
 
