@@ -1,23 +1,18 @@
 # PULSE: Generative Phase Evolution for Non-Stationary Time Series Forecasting
 
 <p align="center">
-  <img src="assets/teaser.png" width="92%">
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Conference-ICML%202026-red" alt="Conference">
-  <img src="https://img.shields.io/badge/Task-Time%20Series%20Forecasting-green" alt="Task">
-  <img src="https://img.shields.io/badge/Framework-PyTorch-orange" alt="Framework">
-  <img src="https://img.shields.io/badge/Model-PULSE-blue" alt="Model">
+  <img src="assets/fig1_motivation_efficiency.png" width="95%">
 </p>
 
 This is the official implementation of **PULSE: Generative Phase Evolution for Non-Stationary Time Series Forecasting**.
 
 PULSE is a physics-informed framework for non-stationary time series forecasting. It shifts forecasting from **passive historical fitting** to **generative phase evolution**, enabling a lightweight backbone to model evolving temporal structures under distribution shifts.
 
+---
+
 ## Introduction
 
-Time series forecasting under non-stationarity requires models to capture stable temporal structures while adapting to future distribution shifts. Existing methods often rely on static historical assumptions, such as restoring future statistics from historical windows or directly copying past periodic patterns. These assumptions can lead to **Phase Amnesia**, where models lose awareness of the evolving global temporal context.
+Time series forecasting under non-stationarity requires models to capture stable temporal structures while adapting to future distribution shifts. Existing methods often rely on static historical assumptions, such as restoring future statistics from historical windows or directly copying historical periodic patterns. These assumptions can lead to **Phase Amnesia**, where models lose awareness of the evolving global temporal context.
 
 PULSE addresses this issue with a simple design philosophy:
 
@@ -41,7 +36,7 @@ PULSE contains three key components:
 ## Framework
 
 <p align="center">
-  <img src="assets/framework.png" width="90%">
+  <img src="assets/fig2_framework.png" width="90%">
 </p>
 
 Given a historical sequence, PULSE first constructs a deterministic phase anchor and extracts the residual component:
@@ -50,17 +45,13 @@ Given a historical sequence, PULSE first constructs a deterministic phase anchor
 Historical Input = Phase Anchor + Residual
 ```
 
-Different from standard normalization methods that normalize the raw sequence directly, PULSE normalizes only the stochastic residual while preserving the deterministic phase anchor in the original coordinate system. The Phase Router then evolves the historical phase anchor into a future-oriented phase anchor. Finally, PULSE reconstructs the prediction by injecting the generated future anchor back into the denormalized residual.
+Unlike standard normalization methods that normalize the raw sequence directly, PULSE normalizes only the stochastic residual while preserving the deterministic phase anchor in the original coordinate system. The Phase Router then evolves the historical phase anchor into a future-oriented phase anchor. Finally, PULSE reconstructs the prediction by injecting the generated future anchor back into the denormalized residual.
 
 ---
 
 ## Main Results
 
-<p align="center">
-  <img src="assets/main_results.png" width="90%">
-</p>
-
-PULSE is evaluated on 12 real-world multivariate time series forecasting datasets.
+PULSE is evaluated on **12 real-world multivariate time series forecasting datasets**, covering both long-term and short-term forecasting scenarios.
 
 ```text
 MSE:   10 / 12 first-place results
@@ -70,36 +61,96 @@ Total: 18 / 24 first-place entries
 
 These results suggest that a phase-aware inductive bias can be more important than simply increasing architectural complexity.
 
+<p align="center">
+  <img src="assets/table1_main_results.png" width="98%">
+</p>
+
+<p align="center">
+  <b>Table 1.</b> Main forecasting performance across 12 real-world datasets.
+</p>
+
 ---
 
 ## Plug-and-Play Capability
 
-<p align="center">
-  <img src="assets/plug_and_play.png" width="86%">
-</p>
+PULSE can also be used as a plug-and-play enhancement module for existing forecasting backbones. In our experiments, PULSE consistently improves different model families, including Transformer-based, convolutional, patch-based, and linear forecasters.
 
-PULSE can also be used as a plug-and-play enhancement module for different forecasting backbones. The repository includes implementations of several representative models:
+Representative supported backbones include:
 
 ```text
-Autoformer
-CycleNet
 DLinear
-iTransformer
 PatchTST
-PULSE
 TimesNet
-TimeXer
+iTransformer
 ```
+
+<p align="center">
+  <img src="assets/table2_plug_and_play.png" width="98%">
+</p>
+
+<p align="center">
+  <b>Table 2.</b> Plug-and-play forecasting performance with different backbones.
+</p>
+
+<p align="center">
+  <img src="assets/fig4_plug_and_play_efficiency.png" width="78%">
+</p>
+
+<p align="center">
+  <b>Figure 4.</b> Plug-and-play efficiency on the Solar dataset.
+</p>
 
 ---
 
-## Visualization
+## Ablation Study
+
+We conduct component-wise ablation studies to validate the contribution of each design in PULSE.
+
+The ablation results show that:
+
+- Removing the **Phase Anchor** causes the largest degradation, indicating that stable phase-aware disentanglement is the foundation of PULSE.
+- Removing the **Phase Router** weakens the ability to generate future phase trajectories.
+- Removing **Statistic-Aware Mixup** or disabling its statistic-aware mechanism reduces robustness to volatility shifts.
 
 <p align="center">
-  <img src="assets/phase_anchor_vis.png" width="90%">
+  <img src="assets/table3_ablation.png" width="98%">
 </p>
 
-The visualization shows that PULSE does not simply copy historical patterns. Instead, it learns future-oriented phase evolution and generates adaptive future phase anchors.
+<p align="center">
+  <b>Table 3.</b> Ablation studies of the proposed PULSE framework.
+</p>
+
+---
+
+## Phase Evolution Visualization
+
+To verify whether PULSE truly learns future-oriented phase evolution, we visualize the learned historical and future phase anchors.
+
+The visualization shows that PULSE does not simply copy historical patterns. Instead, it maps similar historical anchors to different future phase trajectories when their future dynamics diverge, supporting the motivation of generative phase evolution.
+
+<p align="center">
+  <img src="assets/fig3_phase_anchor_visualization.png" width="92%">
+</p>
+
+<p align="center">
+  <b>Figure 3.</b> Visual analysis of learned phase anchors versus raw data.
+</p>
+
+---
+
+## Accuracy--Efficiency Trade-Off
+
+Besides forecasting accuracy, we also evaluate actual inference latency and peak GPU memory usage in the plug-and-play setting.
+
+The results show that PULSE improves forecasting accuracy with modest runtime and memory overhead, making it a practical enhancement module for existing forecasting architectures.
+
+<p align="center">
+  <img src="assets/table4_efficiency_tradeoff.png" width="98%">
+</p>
+
+<p align="center">
+  <b>Table 4.</b> Plug-and-play accuracy--efficiency trade-off.
+</p>
 
 ---
 
@@ -319,6 +370,15 @@ result.txt
 
 ```text
 PULSE/
+├── assets/
+│   ├── fig1_motivation_efficiency.png
+│   ├── fig2_framework.png
+│   ├── fig3_phase_anchor_visualization.png
+│   ├── fig4_plug_and_play_efficiency.png
+│   ├── table1_main_results.png
+│   ├── table2_plug_and_play.png
+│   ├── table3_ablation.png
+│   └── table4_efficiency_tradeoff.png
 ├── data_provider/
 │   ├── data_factory.py          # Dataset selection and dataloader construction
 │   ├── data_loader.py           # Dataset classes for ETT, custom, Solar, PEMS, and Weather
@@ -378,15 +438,18 @@ PULSE/
 
 ## README Figures
 
-The figures used in this README are expected to be placed under `assets/`.
+All figures and tables used in this README should be placed under `assets/`.
 
 ```text
 assets/
-├── teaser.png
-├── framework.png
-├── main_results.png
-├── plug_and_play.png
-└── phase_anchor_vis.png
+├── fig1_motivation_efficiency.png
+├── fig2_framework.png
+├── fig3_phase_anchor_visualization.png
+├── fig4_plug_and_play_efficiency.png
+├── table1_main_results.png
+├── table2_plug_and_play.png
+├── table3_ablation.png
+└── table4_efficiency_tradeoff.png
 ```
 
 These files are only used for README visualization. They are not required for training or evaluation.
