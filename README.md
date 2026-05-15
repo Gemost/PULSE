@@ -311,5 +311,5 @@ https://github.com/thuml/Autoformer
 For questions or discussions, please contact:
 
 ```text
-Yangyou Liu: gemost1028@163.com
+Yangyou Liu: 2024223045153@stu.scu.edu.cn
 ```
